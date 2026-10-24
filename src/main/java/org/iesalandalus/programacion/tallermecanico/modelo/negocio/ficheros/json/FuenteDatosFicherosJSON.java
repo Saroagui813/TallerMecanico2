@@ -4,9 +4,6 @@ import org.iesalandalus.programacion.tallermecanico.modelo.negocio.IClientes;
 import org.iesalandalus.programacion.tallermecanico.modelo.negocio.IFuenteDatos;
 import org.iesalandalus.programacion.tallermecanico.modelo.negocio.ITrabajos;
 import org.iesalandalus.programacion.tallermecanico.modelo.negocio.IVehiculos;
-import org.iesalandalus.programacion.tallermecanico.modelo.negocio.ficheros.json.Clientes;
-import org.iesalandalus.programacion.tallermecanico.modelo.negocio.ficheros.json.Trabajos;
-import org.iesalandalus.programacion.tallermecanico.modelo.negocio.ficheros.json.Vehiculos;
 
 public class FuenteDatosFicherosJSON implements IFuenteDatos {
     @Override
