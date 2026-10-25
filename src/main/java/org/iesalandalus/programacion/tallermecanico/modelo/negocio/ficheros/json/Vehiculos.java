@@ -18,7 +18,7 @@ public class Vehiculos implements IVehiculos {
 
     private static final String FICHERO_VEHICULOS = String.format("%s%s%s%s%s%s%s", "datos", File.separator, "ficheros", File.separator, "json", File.separator, "vehiculos.json");
 
-    private ObjectMapper mapper;
+    private static ObjectMapper mapper;
     private static Vehiculos instancia;
 
     private Vehiculos() {
