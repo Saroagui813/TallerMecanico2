@@ -5,7 +5,7 @@ import org.iesalandalus.programacion.tallermecanico.modelo.negocio.IFuenteDatos;
 import org.iesalandalus.programacion.tallermecanico.modelo.negocio.ITrabajos;
 import org.iesalandalus.programacion.tallermecanico.modelo.negocio.IVehiculos;
 
-public class FuenteDatosFicherosMySQL implements IFuenteDatos {
+public class FuenteDatosMySQL implements IFuenteDatos {
 
 
     public IClientes crearClientes(){
