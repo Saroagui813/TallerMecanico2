@@ -24,7 +24,7 @@ public class Clientes implements IClientes {
         return instancia;
     }
 
-    private void Clientes() {
+    private Clientes() {
 
     }
 

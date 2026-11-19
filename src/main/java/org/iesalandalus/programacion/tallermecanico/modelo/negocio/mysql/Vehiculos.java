@@ -24,6 +24,10 @@ public class Vehiculos implements IVehiculos {
         return instancia;
     }
 
+    private Vehiculos() {
+
+    }
+
     @Override
     public void comenzar() {
         conexion = MySQL.getConexion();
@@ -31,7 +35,7 @@ public class Vehiculos implements IVehiculos {
 
     @Override
     public void terminar() {
-
+        MySQL.cerrarConexion();
     }
 
     @Override
@@ -43,9 +47,9 @@ public class Vehiculos implements IVehiculos {
             ResultSet resultado = sentencia.executeQuery();
             while(resultado.next()) {
                 Vehiculo vehiculo = new Vehiculo(
-                resultado.getString(1),
+                resultado.getString(3),
                 resultado.getString(2),
-                resultado.getString(3)
+                resultado.getString(1)
                 );
                 lista.add(vehiculo);
             }
@@ -68,7 +72,9 @@ public class Vehiculos implements IVehiculos {
             PreparedStatement sentencia;
             try {
                 sentencia = conexion.prepareStatement(consultaSQL);
-
+                sentencia.setString(1, vehiculo.matricula());
+                sentencia.setString(2, vehiculo.modelo());
+                sentencia.setString(3, vehiculo.marca());
 
                 filas = sentencia.executeUpdate();
 
@@ -84,11 +90,43 @@ public class Vehiculos implements IVehiculos {
 
     @Override
     public Vehiculo buscar(Vehiculo vehiculo) {
-        return null;
+        Objects.requireNonNull(vehiculo, "No se puede buscar un vehiculo nulo.");
+        Vehiculo encontrado = null;
+        String consultaSQL = "SELECT * FROM vehiculos WHERE matricula = ?";
+        try {
+            PreparedStatement sentencia = conexion.prepareStatement(consultaSQL);
+            sentencia.setString(1, vehiculo.matricula());
+            ResultSet resultado = sentencia.executeQuery();
+            if(resultado.next()) {
+                encontrado = new Vehiculo(
+                        resultado.getString(3),
+                        resultado.getString(2),
+                        resultado.getString(1)
+                );
+            }
+            sentencia.close();
+            resultado.close();
+        } catch (SQLException e) {
+            System.out.println("ERROR MySQL: " + e.getMessage());
+        }
+        return encontrado;
     }
 
     @Override
     public void borrar(Vehiculo vehiculo) throws TallerMecanicoExcepcion {
-
+        Objects.requireNonNull(vehiculo, "No se puede borrar un vehiculo nulo.");
+        if (buscar(vehiculo) == null) {
+            System.out.println("No existe el vehiculo con esa matricula.");
+        } else {
+            String consultaSQL = "DELETE FROM vehiculos WHERE matricula = ?";
+            try {
+                PreparedStatement sentencia = conexion.prepareStatement(consultaSQL);
+                sentencia.setString(1, vehiculo.matricula());
+                sentencia.executeUpdate();
+                sentencia.close();
+            } catch (SQLException e) {
+                System.out.println("ERROR MySQL: " + e.getMessage());
+            }
+        }
     }
 }
