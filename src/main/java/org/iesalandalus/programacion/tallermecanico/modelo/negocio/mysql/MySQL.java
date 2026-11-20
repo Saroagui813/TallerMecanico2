@@ -7,9 +7,9 @@ import java.sql.SQLException;
 public class MySQL {
 
     private static final String HOST = "";
-    private static final String ESQUEMA = "";
-    private static final String USUARIO = "";
-    private static final String CONTRASENA = "";
+    private static final String ESQUEMA = "tallerMecanico";
+    private static final String USUARIO = "root";
+    private static final String CONTRASENA = "root";
 
     private static Connection conexion;
 
