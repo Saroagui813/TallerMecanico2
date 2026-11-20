@@ -47,9 +47,9 @@ public class Clientes implements IClientes {
             ResultSet resultado = sentencia.executeQuery();
             while (resultado.next()) {
                 Cliente cliente = new Cliente(
-                        resultado.getString(2),
-                        resultado.getString(1),
-                        resultado.getString(3)
+                        resultado.getString("nombre"),
+                        resultado.getString("dni"),
+                        resultado.getString("telefono")
                 );
                 lista.add(cliente);
             }
@@ -68,7 +68,7 @@ public class Clientes implements IClientes {
         if (buscar(cliente) != null) {
             throw new TallerMecanicoExcepcion("Ya existe un cliente con ese DNI.");
         } else {
-            String consultaSQL = "INSERT INTO clientes VALUES (?, ?, ?)";
+            String consultaSQL = "INSERT INTO clientes (dni, nombre, telefono) VALUES (?, ?, ?)";
             PreparedStatement sentencia;
             try {
                 sentencia = conexion.prepareStatement(consultaSQL);
@@ -124,9 +124,9 @@ public class Clientes implements IClientes {
             ResultSet resultado = sentencia.executeQuery();
             if (resultado.next()) {
                 encontrado = new Cliente(
-                        resultado.getString(2),
-                        resultado.getString(1),
-                        resultado.getString(3)
+                        resultado.getString("nombre"),
+                        resultado.getString("dni"),
+                        resultado.getString("telefono")
                 );
             }
             sentencia.close();

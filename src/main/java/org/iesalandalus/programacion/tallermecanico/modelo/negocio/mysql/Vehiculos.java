@@ -45,11 +45,11 @@ public class Vehiculos implements IVehiculos {
         try {
             PreparedStatement sentencia = conexion.prepareStatement(consultaSQL);
             ResultSet resultado = sentencia.executeQuery();
-            while(resultado.next()) {
+            while (resultado.next()) {
                 Vehiculo vehiculo = new Vehiculo(
-                resultado.getString(3),
-                resultado.getString(2),
-                resultado.getString(1)
+                        resultado.getString("marca"),
+                        resultado.getString("modelo"),
+                        resultado.getString("matricula")
                 );
                 lista.add(vehiculo);
             }
@@ -68,7 +68,7 @@ public class Vehiculos implements IVehiculos {
         if (buscar(vehiculo) != null) {
             throw new TallerMecanicoExcepcion("Ya existe un vehiculo con esa matrícula.");
         } else {
-            String consultaSQL = "INSERT INTO vehiculos VALUES (?, ?, ?)";
+            String consultaSQL = "INSERT INTO vehiculos (matricula, modelo, marca) VALUES (?, ?, ?)";
             PreparedStatement sentencia;
             try {
                 sentencia = conexion.prepareStatement(consultaSQL);
@@ -97,11 +97,11 @@ public class Vehiculos implements IVehiculos {
             PreparedStatement sentencia = conexion.prepareStatement(consultaSQL);
             sentencia.setString(1, vehiculo.matricula());
             ResultSet resultado = sentencia.executeQuery();
-            if(resultado.next()) {
+            if (resultado.next()) {
                 encontrado = new Vehiculo(
-                        resultado.getString(3),
-                        resultado.getString(2),
-                        resultado.getString(1)
+                        resultado.getString("marca"),
+                        resultado.getString("modelo"),
+                        resultado.getString("matricula")
                 );
             }
             sentencia.close();
