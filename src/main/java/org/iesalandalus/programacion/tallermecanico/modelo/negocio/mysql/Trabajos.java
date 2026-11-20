@@ -240,5 +240,21 @@ public class Trabajos implements ITrabajos {
     @Override
     public void borrar(Trabajo trabajo) throws TallerMecanicoExcepcion {
         Objects.requireNonNull(trabajo, "No se puede borrar un trabajo nulo.");
+        if (buscar(trabajo) == null) {
+            throw new TallerMecanicoExcepcion("No existe ningún trabajo con esa matrícula.");
+        } else {
+            String consultaSQL = "DELETE FROM trabajos WHERE cliente = ? AND vehiculo = ? AND fechaInicio = ?";
+            PreparedStatement sentencia;
+            try {
+                sentencia = conexion.prepareStatement(consultaSQL);
+                sentencia.setString(1, trabajo.getCliente().getDni());
+                sentencia.setString(2, trabajo.getVehiculo().matricula());
+                sentencia.setDate(3, Date.valueOf(trabajo.getFechaInicio()));
+                sentencia.executeUpdate();
+                sentencia.close();
+            } catch (SQLException e) {
+                System.out.println("ERROR MySQL: "+ e.getMessage());
+            }
+        }
     }
 }
